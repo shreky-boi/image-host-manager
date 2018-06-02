@@ -1,0 +1,7 @@
+{
+    "name": "Steven's Image Host Manager",
+    "description": "A simple front-end wrapper for your AWS S3 bucket based image hosting.",
+    "repository": "http://github.com/stevenmaguire/image-host-manager",
+    "logo": "https://s3.amazonaws.com/static.stevenmaguire.com/logo.png",
+    "keywords": ["php", "slim", "aws", "s3", "basic auth"]
+}
