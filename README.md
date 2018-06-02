@@ -4,6 +4,8 @@ I like to host my own images on S3. I built this simple web app to front my S3 b
 
 The app is built in PHP with the [Slim 3 Framework](https://www.slimframework.com/). It uses a handful of php libraries that need to be installed with [composer](https://getcomposer.org/doc/00-intro.md).
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ## Features
 
 - Preview all (up to 1000) images in your bucket, sorted by most recently modified first.
