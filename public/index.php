@@ -13,8 +13,13 @@ $projectRoot = dirname(__DIR__);
 
 require $projectRoot . '/vendor/autoload.php';
 
-$dotenv = new \Dotenv\Dotenv($projectRoot);
-$dotenv->load();
+// Let's try to load environment vars from file.
+try {
+    $dotenv = new \Dotenv\Dotenv($projectRoot);
+    $dotenv->load();
+} catch (Exception $e) {
+    fwrite(STDOUT, "Unable to load environment variables from file: ". $e->getMessage());
+}
 
 session_start();
 
