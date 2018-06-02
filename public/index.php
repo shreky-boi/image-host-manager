@@ -18,7 +18,10 @@ try {
     $dotenv = new \Dotenv\Dotenv($projectRoot);
     $dotenv->load();
 } catch (Exception $e) {
-    fwrite(STDOUT, "Unable to load environment variables from file: ". $e->getMessage());
+    fwrite(
+        fopen('php://stdout','w'),
+        sprintf("Unable to load environment variables from file: %s\n", $e->getMessage())
+    );
 }
 
 session_start();
