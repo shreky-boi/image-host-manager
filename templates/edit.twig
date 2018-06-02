@@ -8,8 +8,10 @@
 {% set url =  images_base_url ~ '/' ~ image.basename %}
 <div class="row">
     <div class="col-sm">
-        <h1>{{ image.basename }}</h1>
-        <img src="{{ url }}" class="clipboard" data-clipboard-text="{{ url }}" data-toggle="tooltip" data-placement="top" title="Copied to clipboard!" />
+        <figure class="figure">
+            <img src="{{ url }}" class="clipboard figure-img img-fluid rounded" data-clipboard-text="{{ url }}" data-toggle="tooltip" data-placement="top" title="Copied to clipboard!" />
+            <figcaption class="figure-caption">{{ url }}</figcaption>
+        </figure>
     </div>
     <div class="col-sm">
         <form method="POST">

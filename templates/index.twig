@@ -12,7 +12,10 @@
                 {% if justAdded %}
                 <div class="card-header">Just Added</div>
                 {% endif %}
-                <img class="card-img-top img-fluid clipboard" style="margin: auto; display: block;" src="{{ url }}" data-clipboard-text="{{ url }}" data-toggle="tooltip" data-placement="top" title="Copied to clipboard!" />
+                <figure class="figure mb-0">
+                    <img class="card-img-top img-fluid figure-img clipboard" style="margin: auto; display: block;" src="{{ url }}" data-clipboard-text="{{ url }}" data-toggle="tooltip" data-placement="top" title="Copied to clipboard!" />
+                    <figcaption class="figure-caption">{{ url }}</figcaption>
+                </figure>
                 <div class="card-block p-2">
                     <p class="card-title text-left">
                         <a href="{{ url }}" class="btn btn-outline-secondary btn-small" target="_blank">Preview <i class="fa fa-external-link-alt"></i></a>
