@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{{ app_name }}</title>
+
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png" />
+        <link rel="icon" type="image/png" href="/favicon/favicon-196x196.png" sizes="196x196" />
+        <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16" />
+        <link rel="icon" type="image/png" href="/favicon/favicon-128.png" sizes="128x128" />
+        <meta name="application-name" content="&nbsp;"/>
+        <meta name="msapplication-TileColor" content="#FFFFFF" />
+        <meta name="msapplication-TileImage" content="/favicon/mstile-144x144.png" />
+        <meta name="msapplication-square70x70logo" content="/favicon/mstile-70x70.png" />
+        <meta name="msapplication-square150x150logo" content="/favicon/mstile-150x150.png" />
+        <meta name="msapplication-wide310x150logo" content="/favicon/mstile-310x150.png" />
+        <meta name="msapplication-square310x310logo" content="/favicon/mstile-310x310.png" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            img.clipboard {
+                cursor: pointer;
+            }
+            .text-white a {
+                color: inherit;
+            }
+        </style>
+        {% block styles %}{% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/">{{ app_name }}</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if isIndex %}
+            <button type="button" class="btn btn-outline-secondary btn-sm mr-2" data-toggle="modal" data-target="#newImageModal">Add new image...</button>
+            <form class="form-inline mr-2 my-2 my-lg-0">
+              <input type="text" placeholder="Filter by keyword" class="form-control filter-by-keyword" aria-label="Filter" autocapitalize="none" />
+            </form>
+            {% endif %}
+            <span class="navbar-text ml-auto">Hello, {{ current_user }}</span>
+          </div>
+        </nav>
+        <div class="container-fluid pt-3">
+            {% if flash %}
+            <div class="row">
+                <div class="col-sm">
+                    {% for key, messages in flash %}
+                    <div class="alert alert-{{ key }}" role="alert">
+                        {{ messages | join('; ') }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <h1>{{ current_path }}</h1>
+            {% block body %}{% endblock %}
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+        <script>
+            $(function () {
+                // Copy url to clipboard - https://clipboardjs.com
+                var clipboard = new ClipboardJS('.clipboard');
+                clipboard.on('success', function(e) {
+                    // Some helpful info is attached to event
+                    // e.action, e.text, e.trigger
+                    $(e.trigger).tooltip('show');
+                    setTimeout(function () {
+                        $(e.trigger).tooltip('hide');
+                    }, 3000);
+                    e.clearSelection();
+                });
+                clipboard.on('error', function(e) {
+                    console.log('error', e);
+                });
+            });
+        </script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

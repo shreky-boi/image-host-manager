@@ -1,0 +1,83 @@
+{% extends 'layout.twig' %}
+{% set isIndex = true %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm">
+        <div class="card-columns">
+            {% for image in images %}
+            {% set justAdded = added in image.basename %}
+            {% set url =  images_base_url ~ '/' ~ image.basename %}
+            <div class="card text-center {{ justAdded ? 'text-white bg-success' : '' }}" data-url="{{ url }}">
+                {% if justAdded %}
+                <div class="card-header">Just Added</div>
+                {% endif %}
+                <img class="card-img-top img-fluid clipboard" style="margin: auto; display: block;" src="{{ url }}" data-clipboard-text="{{ url }}" data-toggle="tooltip" data-placement="top" title="Copied to clipboard!" />
+                <div class="card-block p-2">
+                    <p class="card-title text-left">
+                        <a href="{{ url }}" class="btn btn-outline-secondary btn-small" target="_blank">Preview <i class="fa fa-external-link-alt"></i></a>
+                        <a href="{{ image.slug }}" class="btn btn-outline-secondary btn-small float-right">Edit</a>
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="newImageModal" tabindex="-1" role="dialog" aria-labelledby="newImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="POST" action="/add">
+          <div class="modal-header">
+            <h5 class="modal-title" id="newImageModalLabel">Add image</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <input type="hidden" name="csrf_name" value="{{ csrf_name }}" />
+                <input type="hidden" name="csrf_value" value="{{ csrf_value }}" />
+                <input type="text" name="url" placeholder="Url" class="form-control mb-2 mr-sm-2" />
+                <input type="text" name="name" placeholder="Name (Optional)" class="form-control mb-2 mr-sm-2" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <input type="submit" value="Add" class="btn btn-primary" />
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        var requestAnimationTimeout = function(callback, delay) {
+            var dateNow = Date.now;
+            var requestAnimation = window.requestAnimationFrame;
+            var start = dateNow();
+            var stop;
+            var timeoutFunc = function () {
+                if (dateNow() - start < delay) {
+                    return stop || requestAnimation(timeoutFunc);
+                } else {
+                    return callback();
+                }
+            };
+            requestAnimation(timeoutFunc);
+        };
+        $('input.filter-by-keyword').on('keyup change', function (e) {
+            var input = this;
+            requestAnimationTimeout(function(){
+                $('.card').show();
+                var filter = $(input).val().toLowerCase();
+                if (filter) {
+                    $('.card:not([data-url*="'+filter+'"])').css('display','none');
+                }
+            }, 50);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'layout.twig' %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block body %}
+{% set url =  images_base_url ~ '/' ~ image.basename %}
+<div class="row">
+    <div class="col-sm">
+        <h1>{{ image.basename }}</h1>
+        <img src="{{ url }}" class="clipboard" data-clipboard-text="{{ url }}" data-toggle="tooltip" data-placement="top" title="Copied to clipboard!" />
+    </div>
+    <div class="col-sm">
+        <form method="POST">
+            <input type="hidden" name="_METHOD" value="PUT"/>
+            <input type="hidden" name="csrf_name" value="{{ csrf_name }}" />
+            <input type="hidden" name="csrf_value" value="{{ csrf_value }}" />
+            <div class="form-group">
+                <label>Alt text</label>
+                <textarea name="description" class="form-control" placeholder="Alt text">{{ image.description }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Tags (comma or new line separated)</label>
+                <textarea name="tags" class="form-control" placeholder="Tags">{{ image.tags | join("\n") }}</textarea>
+            </div>
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('form').on('change keyup keydown paste cut', 'textarea', function (){
+            $(this).height(0).height(this.scrollHeight);
+        }).find('textarea').change();
+    });
+</script>
+{% endblock %}

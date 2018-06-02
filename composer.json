@@ -1,0 +1,45 @@
+{
+    "name": "stevenmaguire/image-host-manager",
+    "description": "A simple front-end wrapper for your AWS S3 bucket based image hosting.",
+    "keywords": ["microframework", "rest", "router", "psr7"],
+    "homepage": "http://github.com/stevenmaguire/image-host-manager",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Steven Maguire",
+            "email": "stevenmaguire@gmail.com",
+            "homepage": "https://stevenmaguire.com/"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "slim/slim": "^3.1",
+        "monolog/monolog": "^1.17",
+        "tuupola/slim-basic-auth": "^3.1",
+        "vlucas/phpdotenv": "^2.4",
+        "aws/aws-sdk-php": "^3.59",
+        "slim/flash": "^0.4.0",
+        "slim/csrf": "^0.8.2",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "league/uri": "^5.3",
+        "symfony/var-dumper": "^4.1",
+        "slim/twig-view": "^2.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.8 < 6.0",
+        "squizlabs/php_codesniffer": "~2.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "process-timeout" : 0
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public",
+        "test": "phpunit"
+    }
+
+}
